@@ -3,28 +3,27 @@ import axios from "../../utilis/axios";
 import requests from "../../utilis/requests";
 
 import "./banner.css";
+
 const Banner = () => {
   const [movie, setmovie] = useState({});
   useEffect(() => {
-    (async () => {
+    async function fetchData() {
       try {
         const request = await axios.get(requests.fetchNetflixOriginals);
-        console.log(request);
-        setmovie(
-          request.data.results[
-            Math.floor(Math.random() * request.data.results.length)
-          ]
-        );
+        const result = request.data.results;
+        console.log(result);
+        setmovie(result[Math.floor(Math.random() * result.length)]);
       } catch (error) {
         console.log("error", error);
       }
-    })();
+    }
+    fetchData();
   }, []);
 
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
-  //  console.log(movie)
+  console.log(movie);
   return (
     <div
       className="banner"
